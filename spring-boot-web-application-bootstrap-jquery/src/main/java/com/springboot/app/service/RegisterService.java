@@ -1,5 +1,7 @@
 package com.springboot.app.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class RegisterService {
 	@Autowired
 	RandomNumber rand;
 	
+	@Autowired
+	HttpSession session;
 	
 	
 	public String register(Registration regs)
@@ -24,6 +28,8 @@ public class RegisterService {
 		try {
 			repo.save(regs);
 			rand.random(regs.getEmail());
+
+            session.setAttribute("email", regs.getEmail());
 			return "done";
 		} catch (Exception e) {
 			return e.toString();

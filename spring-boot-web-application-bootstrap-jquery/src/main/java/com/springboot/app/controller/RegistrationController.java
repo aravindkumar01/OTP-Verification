@@ -1,5 +1,7 @@
 package com.springboot.app.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,8 +20,10 @@ public class RegistrationController {
 	
 	@Autowired
 	RandomNumber rand;
-@Autowired
-RegisterService service;
+	@Autowired
+	RegisterService service;
+	@Autowired
+	HttpSession session;
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String customer(@ModelAttribute("Registration") Registration regs)
 	{
@@ -51,7 +55,8 @@ RegisterService service;
 	public  String customer()
 	{
 		try {
-			rand.random("aravindkumark1997@gmail.com");
+		String email= (String) session.getAttribute("email");
+			rand.random(email);
 			return "verify";
 		} catch (Exception e) {
 			return e.toString();
